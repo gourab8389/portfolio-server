@@ -3,24 +3,731 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio API</title>
+    <title>Portfolio API Documentation</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4f4f9; color: #333; padding: 2em; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 2em; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        h1 { color: #5a67d8; }
-        code { background-color: #e2e8f0; padding: 0.2em 0.4em; border-radius: 4px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            color: #5a67d8;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .base-url {
+            background: #f8f9ff;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #5a67d8;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #5a67d8;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #4c51bf;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .endpoints {
+            padding: 1.5rem;
+        }
+
+        .endpoint {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .endpoint:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .endpoint-header {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #f8f9ff;
+        }
+
+        .method {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .method.get { background: #10b981; color: white; }
+        .method.post { background: #3b82f6; color: white; }
+        .method.put { background: #f59e0b; color: white; }
+        .method.delete { background: #ef4444; color: white; }
+
+        .endpoint-path {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #5a67d8;
+            flex-grow: 1;
+        }
+
+        .endpoint-copy {
+            background: #5a67d8;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .endpoint-copy:hover {
+            background: #4c51bf;
+            transform: scale(1.05);
+        }
+
+        .endpoint-description {
+            padding: 1rem;
+            background: white;
+            color: #666;
+        }
+
+        .auth-required {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .rate-limited {
+            background: #fecaca;
+            color: #991b1b;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .validation-info {
+            background: #f0f9ff;
+            border-left: 4px solid #0284c7;
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .validation-info h4 {
+            color: #0284c7;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .validation-item {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .endpoint-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Portfolio API</h1>
-        <p>This API provides endpoints for managing portfolio data.</p>
-        <h2>Available Endpoints:</h2>
-        <ul>
-            <li><code>GET /health</code> - Checks the server status.</li>
-            <li><code>GET /api/projects</code> - Fetches all portfolio projects.</li>
-            <li><code>POST /api/contact</code> - Submits the contact form.</li>
-        </ul>
+        <div class="header">
+            <h1>🚀 Portfolio API</h1>
+            <p>Complete API documentation for the Portfolio Management System</p>
+            <div class="base-url">
+                <span id="baseUrl">https://portfolio-server-m9ep.onrender.com</span>
+                <button class="copy-btn" onclick="copyToClipboard('baseUrl')">Copy Base URL</button>
+            </div>
+        </div>
+
+        <!-- Health Check -->
+        <div class="section">
+            <div class="section-header">
+                🏥 Health Check
+            </div>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/health</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/health')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Check if the server is running and healthy.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Public Portfolio Routes -->
+        <div class="section">
+            <div class="section-header">
+                🌐 Public Portfolio Endpoints
+            </div>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/portfolio</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/portfolio')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Get complete portfolio data including profile, skills, education, experiences, and projects.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/profile</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/profile')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Get profile information including name, email, bio, and other personal details.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/education</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/education')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Get all education records with institution details, degrees, and grades.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/skills</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/skills')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Get all skills with proficiency levels (1-100).
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/experiences</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/experiences')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Get all work experiences including organizations, internships, and college events.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/projects</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/projects')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Get all projects with descriptions, links, and technologies used.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/projects/:id</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/projects/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Get a specific project by its ID with detailed information.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Routes -->
+        <div class="section">
+            <div class="section-header">
+                📧 Contact Endpoints
+            </div>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/api/contact</span>
+                        <span class="rate-limited">Rate Limited</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/contact')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Submit a contact form message. Rate limited to 3 requests per 15 minutes per IP.
+                        <div class="validation-info">
+                            <h4>Required Fields:</h4>
+                            <div class="validation-item">• <strong>name:</strong> Minimum 2 characters</div>
+                            <div class="validation-item">• <strong>email:</strong> Valid email address</div>
+                            <div class="validation-item">• <strong>message:</strong> Optional, max 1000 characters</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="endpoint-path">/api/admin/contacts</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/contacts')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Get all contact form submissions. Admin authentication required.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-path">/api/admin/contacts/:id/read</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/contacts/:id/read')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Mark a contact message as read. Admin authentication required.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method delete">DELETE</span>
+                        <span class="endpoint-path">/api/admin/contacts/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/contacts/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Delete a contact message. Admin authentication required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Profile Routes -->
+        <div class="section">
+            <div class="section-header">
+                👤 Admin Profile Management
+            </div>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/api/admin/profile</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/profile')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Create a new profile. Admin authentication required.
+                        <div class="validation-info">
+                            <h4>Required Fields:</h4>
+                            <div class="validation-item">• <strong>email:</strong> Valid email address</div>
+                            <div class="validation-item">• <strong>name:</strong> Minimum 2 characters</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-path">/api/admin/profile/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/profile/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Update an existing profile. Admin authentication required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Education Routes -->
+        <div class="section">
+            <div class="section-header">
+                🎓 Admin Education Management
+            </div>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/api/admin/education</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/education')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Add a new education record. Admin authentication required.
+                        <div class="validation-info">
+                            <h4>Required Fields:</h4>
+                            <div class="validation-item">• <strong>name:</strong> Institution name, min 2 characters</div>
+                            <div class="validation-item">• <strong>stream:</strong> Field of study, min 2 characters</div>
+                            <div class="validation-item">• <strong>grade:</strong> Grade/CGPA, required</div>
+                            <div class="validation-item">• <strong>degree:</strong> Degree type, min 2 characters</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-path">/api/admin/education/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/education/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Update an education record. Admin authentication required.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method delete">DELETE</span>
+                        <span class="endpoint-path">/api/admin/education/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/education/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Delete an education record. Admin authentication required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Skills Routes -->
+        <div class="section">
+            <div class="section-header">
+                🛠️ Admin Skills Management
+            </div>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/api/admin/skills</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/skills')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Add a new skill. Admin authentication required.
+                        <div class="validation-info">
+                            <h4>Required Fields:</h4>
+                            <div class="validation-item">• <strong>name:</strong> Skill name, required</div>
+                            <div class="validation-item">• <strong>proficiency:</strong> Integer between 1-100</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-path">/api/admin/skills/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/skills/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Update a skill. Admin authentication required.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method delete">DELETE</span>
+                        <span class="endpoint-path">/api/admin/skills/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/skills/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Delete a skill. Admin authentication required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Experience Routes -->
+        <div class="section">
+            <div class="section-header">
+                💼 Admin Experience Management
+            </div>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/api/admin/experiences</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/experiences')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Add a new experience. Admin authentication required.
+                        <div class="validation-info">
+                            <h4>Required Fields:</h4>
+                            <div class="validation-item">• <strong>organizationName:</strong> Min 2 characters</div>
+                            <div class="validation-item">• <strong>role:</strong> Min 2 characters</div>
+                            <div class="validation-item">• <strong>description:</strong> Min 10 characters</div>
+                            <div class="validation-item">• <strong>startDate:</strong> Valid ISO8601 date</div>
+                            <div class="validation-item">• <strong>type:</strong> 'organization', 'internship', or 'college_event'</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-path">/api/admin/experiences/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/experiences/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Update an experience record. Admin authentication required.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method delete">DELETE</span>
+                        <span class="endpoint-path">/api/admin/experiences/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/experiences/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Delete an experience record. Admin authentication required.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Project Routes -->
+        <div class="section">
+            <div class="section-header">
+                🚀 Admin Project Management
+            </div>
+            <div class="endpoints">
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="endpoint-path">/api/admin/projects</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/projects')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Add a new project. Admin authentication required.
+                        <div class="validation-info">
+                            <h4>Required Fields:</h4>
+                            <div class="validation-item">• <strong>name:</strong> Project name, min 2 characters</div>
+                            <div class="validation-item">• <strong>type:</strong> 'personal', 'client', 'academic', or 'internship'</div>
+                            <div class="validation-item">• <strong>description:</strong> Min 10 characters</div>
+                            <div class="validation-item">• <strong>githubLinks:</strong> Array of GitHub repository links</div>
+                            <div class="validation-item">• <strong>projectLinks:</strong> Array of live project links</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method put">PUT</span>
+                        <span class="endpoint-path">/api/admin/projects/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/projects/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Update a project. Admin authentication required.
+                    </div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method delete">DELETE</span>
+                        <span class="endpoint-path">/api/admin/projects/:id</span>
+                        <span class="auth-required">Auth Required</span>
+                        <button class="endpoint-copy" onclick="copyEndpoint('/api/admin/projects/:id')">Copy</button>
+                    </div>
+                    <div class="endpoint-description">
+                        Delete a project. Admin authentication required.
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Base URL copied to clipboard!');
+            }).catch(() => {
+                showToast('Failed to copy to clipboard', 'error');
+            });
+        }
+
+        function copyEndpoint(endpoint) {
+            const baseUrl = 'https://portfolio-server-m9ep.onrender.com';
+            const fullUrl = baseUrl + endpoint;
+            
+            navigator.clipboard.writeText(fullUrl).then(() => {
+                showToast(`Endpoint copied: ${endpoint}`);
+            }).catch(() => {
+                showToast('Failed to copy to clipboard', 'error');
+            });
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.background = type === 'error' ? '#ef4444' : '#10b981';
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const endpoints = document.querySelectorAll('.endpoint');
+            endpoints.forEach((endpoint, index) => {
+                endpoint.style.animationDelay = `${index * 0.1}s`;
+                endpoint.style.animation = 'fadeInUp 0.6s ease forwards';
+            });
+        });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
