@@ -11,6 +11,7 @@ import { connectDatabase } from './config/database';
 import adminRoutes from './routes/admin-routes';
 import portfolioRoutes from './routes/portfolio-routes';
 import contactRoutes from './routes/contact-routes';
+import path from 'path';
 
 dotenv.config();
 
@@ -58,6 +59,10 @@ app.get('/health', (req, res) => {
     message: 'Server is running',
     timestamp: new Date().toISOString(),
   });
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
 app.use('/api/admin', adminRoutes);
