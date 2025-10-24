@@ -20,6 +20,13 @@ export interface CreateProfileRequest {
   phoneNumber?: string;
   address?: string;
   bio?: string;
+  location?: string;
+  website?: string;
+  linkedinUrl?: string;
+  githubUrl?: string;
+  twitterUrl?: string;
+  profileImage?: string;
+  resume?: string;
 }
 
 export interface CreateEducationRequest {

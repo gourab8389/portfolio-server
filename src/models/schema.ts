@@ -7,6 +7,13 @@ export const profiles = pgTable('profiles', {
   phoneNumber: varchar('phone_number', { length: 20 }),
   address: text('address'),
   bio: text('bio'),
+  location: varchar('location'),
+  website: varchar('website'),
+  linkedinUrl: varchar('linkedin_url'),
+  githubUrl: varchar('github_url'),
+  twitterUrl: varchar('twitter_url'),
+  profileImage: varchar('profile_image'),
+  resume: varchar('resume'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
