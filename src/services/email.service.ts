@@ -2,28 +2,33 @@ import { resend, emailConfig } from "../config/email";
 
 export class EmailService {
   // 1️⃣ Confirmation email to user
-  static async sendContactConfirmation(to: string, name: string): Promise<void> {
+  static async sendContactConfirmation(
+    to: string,
+    name: string
+  ): Promise<void> {
     try {
       await resend.emails.send({
-        from: `${emailConfig.from.name} <${emailConfig.from.address}>`,
+        from: `${emailConfig.from.name} <onboarding@resend.dev>`,
         to,
+        replyTo: "deyg6988@gmail.com",
         subject: "Thank you for contacting me!",
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #333; text-align: center;">Thank You for Reaching Out!</h2>
-            <p>Hi ${name},</p>
-            <p>Thank you for contacting me through my portfolio website. I appreciate you taking the time to reach out.</p>
-            <p>I have received your message and will get back to you as soon as possible, usually within 24–48 hours.</p>
-            <p>In the meantime, feel free to explore my portfolio and check out my recent projects.</p>
-            <br>
-            <p>Best regards,</p>
-            <p><strong>${emailConfig.from.name}</strong></p>
-            <hr style="border: 1px solid #eee; margin: 20px 0;">
-            <p style="color: #666; font-size: 12px; text-align: center;">
-              This is an automated message. Please do not reply to this email.
-            </p>
-          </div>
-        `,
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <h2 style="color: #333; text-align: center;">Thank You for Reaching Out!</h2>
+      <p>Hi ${name},</p>
+      <p>Thank you for contacting me through my portfolio website. I appreciate you taking the time to reach out.</p>
+      <p>I have received your message and will get back to you as soon as possible, usually within 24–48 hours.</p>
+      <p>In the meantime, feel free to explore my portfolio and check out my recent projects.</p>
+      <br>
+      <p>Best regards,</p>
+      <p><strong>${emailConfig.from.name}</strong></p>
+      <hr style="border: 1px solid #eee; margin: 20px 0;">
+      <p style="color: #666; font-size: 12px; text-align: center;">
+        This is an automated message. Please do not reply to this email.
+      </p>
+    </div>
+  `,
+        text: `Hi ${name},\n\nThank you for contacting me through my portfolio website. I’ll get back to you soon!\n\n– ${emailConfig.from.name}`,
       });
     } catch (error) {
       console.error("Error sending confirmation email:", error);
@@ -32,10 +37,14 @@ export class EmailService {
   }
 
   // 2️⃣ Notification email to admin
-  static async sendContactNotification(contact: { name: string; email: string; message?: string }): Promise<void> {
+  static async sendContactNotification(contact: {
+    name: string;
+    email: string;
+    message?: string;
+  }): Promise<void> {
     try {
       await resend.emails.send({
-        from: `${emailConfig.from.name} <${emailConfig.from.address}>`,
+        from: `${emailConfig.from.name} <onboarding@resend.dev>`,
         to: process.env.FROM_EMAIL || "deyg6988@gmail.com", // admin email
         subject: `New Contact Form Submission from ${contact.name}`,
         html: `
