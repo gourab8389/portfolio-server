@@ -8,6 +8,13 @@
       "when": 1761303211535,
       "tag": "0000_boring_vulcan",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1761394754605,
+      "tag": "0001_smooth_kabuki",
+      "breakpoints": true
     }
   ]
 }

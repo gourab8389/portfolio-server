@@ -34,8 +34,8 @@ export interface CreateEducationRequest {
   stream: string;
   grade: string;
   degree: string;
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
 }
 
 export interface CreateSkillRequest {

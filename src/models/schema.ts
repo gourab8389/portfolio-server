@@ -24,8 +24,8 @@ export const education = pgTable('education', {
   stream: varchar('stream', { length: 255 }).notNull(),
   grade: varchar('grade', { length: 50 }).notNull(),
   degree: varchar('degree', { length: 255 }).notNull(),
-  startDate: timestamp('start_date'),
-  endDate: timestamp('end_date'),
+  startDate: varchar('start_date'),
+  endDate: varchar('end_date'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
