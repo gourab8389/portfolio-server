@@ -15,6 +15,13 @@
       "when": 1761394754605,
       "tag": "0001_smooth_kabuki",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762368746176,
+      "tag": "0002_ordinary_frank_castle",
+      "breakpoints": true
     }
   ]
 }

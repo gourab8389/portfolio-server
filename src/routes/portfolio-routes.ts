@@ -57,10 +57,10 @@ router.delete('/admin/skills/:id', authenticateAdmin, [
 
 // Experiences
 router.post('/admin/experiences', authenticateAdmin, [
-  body('organizationName').isLength({ min: 2 }).withMessage('Organization name must be at least 2 characters'),
-  body('role').isLength({ min: 2 }).withMessage('Role must be at least 2 characters'),
-  body('description').isLength({ min: 10 }).withMessage('Description must be at least 10 characters'),
-  body('startDate').isISO8601().withMessage('Please provide a valid start date'),
+  body('organizationName'),
+  body('role'),
+  body('description'),
+  body('startDate'),
   body('type').isIn(['organization', 'internship', 'college_event']).withMessage('Invalid experience type'),
 ], PortfolioController.createExperience);
 

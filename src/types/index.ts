@@ -50,8 +50,8 @@ export interface CreateExperienceRequest {
   organizationImage?: string;
   role: string;
   description: string;
-  startDate: Date;
-  endDate?: Date;
+  startDate: string;
+  endDate?: string;
   type: 'organization' | 'internship' | 'college_event';
 }
 
@@ -63,8 +63,8 @@ export interface CreateProjectRequest {
   githubLinks: ProjectLink[];
   projectLinks: ProjectLink[];
   technologies?: string[];
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
 }
 
 export type ProjectType = 'personal' | 'client' | 'academic' | 'internship';
