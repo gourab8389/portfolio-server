@@ -41,7 +41,6 @@ export interface CreateEducationRequest {
 export interface CreateSkillRequest {
   name: string;
   proficiency: number;
-  icon?: string;
   category?: string;
 }
 

@@ -34,8 +34,7 @@ export const skills = pgTable('skills', {
   id: serial('id').primaryKey(),
   name: varchar('name').notNull(),
   proficiency: integer('proficiency').notNull(),
-  icon: varchar('icon', { length: 500 }),
-  category: varchar('category', { length: 100 }),
+  category: varchar('category'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 });
