@@ -33,7 +33,7 @@ export const education = pgTable('education', {
 export const skills = pgTable('skills', {
   id: serial('id').primaryKey(),
   name: varchar('name').notNull(),
-  proficiency: integer('proficiency').notNull(),
+  proficiency: varchar('proficiency'),
   category: varchar('category'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
