@@ -59,8 +59,8 @@ export interface CreateProjectRequest {
   type: 'personal' | 'client' | 'academic' | 'internship';
   image?: string;
   description: string;
-  githubLinks: ProjectLink[];
-  projectLinks: ProjectLink[];
+  githubLinks?: ProjectLink[];
+  projectLinks?: ProjectLink[];
   technologies?: string[];
   startDate?: string;
   endDate?: string;
