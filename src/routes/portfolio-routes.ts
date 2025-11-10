@@ -76,9 +76,7 @@ router.delete('/admin/experiences/:id', authenticateAdmin, [
 router.post('/admin/projects', authenticateAdmin, [
   body('name').isLength({ min: 2 }).withMessage('Project name must be at least 2 characters'),
   body('type').isIn(['personal', 'client', 'academic', 'internship']).withMessage('Invalid project type'),
-  body('description').isLength({ min: 10 }).withMessage('Description must be at least 10 characters'),
-  body('githubLinks').isArray().withMessage('Github links must be an array'),
-  body('projectLinks').isArray().withMessage('Project links must be an array'),
+  body('description').isLength({ min: 1 }).withMessage('Description must be at least 1 character'),
 ], PortfolioController.createProject);
 
 router.put('/admin/projects/:id', authenticateAdmin, [
