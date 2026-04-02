@@ -1,12 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/auth.service';
 
-interface AuthenticatedRequest extends Request {
-  admin?: any;
-}
-
 export const authenticateAdmin = async (
-  req: AuthenticatedRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
