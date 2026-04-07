@@ -9,11 +9,6 @@ export interface ContactRequest {
   message?: string;
 }
 
-export interface ProjectLink {
-  name: string;
-  url: string;
-}
-
 export interface CreateProfileRequest {
   email: string;
   name: string;
@@ -51,20 +46,22 @@ export interface CreateExperienceRequest {
   description: string;
   startDate: string;
   endDate?: string;
-  type: 'organization' | 'internship' | 'college_event';
+  type: ExperienceType;
 }
 
 export interface CreateProjectRequest {
   name: string;
-  type: 'personal' | 'client' | 'academic' | 'internship';
+  type: ProjectType;
   image?: string;
   description: string;
-  githubLinks?: ProjectLink[];
-  projectLinks?: ProjectLink[];
+  githubLinks?: string[];
+  isPublic?: boolean;
+  projectLinks?: string[];
+  hasDeployedLink?: boolean;
   technologies?: string[];
   startDate?: string;
   endDate?: string;
 }
 
-export type ProjectType = 'personal' | 'client' | 'academic' | 'internship';
-export type ExperienceType = 'organization' | 'internship' | 'college_event';
+export type ProjectType = 'personal' | 'client' | 'academic' | 'internship' | 'freelance' | 'open_source' | 'company';
+export type ExperienceType = 'organization' | 'internship' | 'college_event' | 'freelance' | 'full_time';
